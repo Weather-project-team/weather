@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Ignore application-git.properties (API keys and sensitive config)
+backend/src/main/resources/application-git.properties
