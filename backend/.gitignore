@@ -19,6 +19,7 @@ bin/
 
 ### IntelliJ IDEA ###
 .idea
+.env
 *.iws
 *.iml
 *.ipr
@@ -38,6 +39,7 @@ out/
 
 # AWS 민감 정보 포함된 설정 파일 무시
 backend/src/main/resources/application-git.properties
+
 
 
 
