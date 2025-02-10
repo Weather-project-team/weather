@@ -35,7 +35,7 @@ export default function Search() {
             value={search}
             type="text" 
             placeholder="지역을 검색하세요" 
-            className="w-full p-2 border-2 border-gray-300 rounded-lg" 
+            className="w-full p-2 border-2 border-sky-400 rounded-lg" 
             onChange={handleInput}/>
 
             {filterCity.length > 0 && (
