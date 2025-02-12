@@ -22,7 +22,7 @@ export default function Search() {
             setLoading(true);
             try{
                 const response = await axios.get("http://localhost:8080/api/weather/cities",{
-                    params:{city:search}
+                    params:{query:search}
                 })
                 setFilterCity(response.data)
             }catch(error){
