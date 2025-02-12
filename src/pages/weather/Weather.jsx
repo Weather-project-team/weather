@@ -47,6 +47,7 @@ export default function Weather() {
                     const weatherResponse = await axios.get("http://localhost:8080/api/weather", {
                         params: { city: cityName }
                     });
+                    console.log(weatherResponse)
 
                     setWeatherData(weatherResponse.data);
                 } catch (error) {
@@ -61,15 +62,12 @@ export default function Weather() {
     return (
         <main>
             <Search />
-            <WeatherInfo />
+            <WeatherInfo weatherData={weatherData} />
 
             {/* 📌 현재 위치 및 가장 가까운 도시 정보 표시 */}
             <div className="mt-4 p-3 bg-gray-100 rounded-lg shadow-md">
-                <strong>위도:</strong> {location.latitude} / <strong>경도:</strong> {location.longitude}
-                <p className="mt-2 text-blue-600 font-bold">가장 가까운 도시: {nearestCity}</p>
-                {weatherData && (
-                    <p className="mt-2">현재 온도: {weatherData.temp}°C / 날씨: {weatherData.description}</p>
-                )}
+                
+                <strong>오늘 날씨 매우 추우니 집에 박혀있으십시오.</strong>
             </div>
 
             {/* 📌 즐겨찾기 리스트 */}
