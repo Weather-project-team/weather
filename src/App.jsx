@@ -1,13 +1,16 @@
-import { RouterProvider } from 'react-router-dom'
-import './App.css'
-import Routes from './Routes'
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import Routes from "./Routes";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
     <>
-      <RouterProvider router={Routes}/>
+      <RecoilRoot>
+        <RouterProvider router={Routes} />
+      </RecoilRoot>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
