@@ -13,6 +13,7 @@ export function FavoriteButton({ city }) {
         },
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       )
       .then((res) => {
