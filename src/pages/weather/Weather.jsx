@@ -134,7 +134,7 @@ export default function Weather() {
                 key={index}
                 className="p-2 border-b border-gray-400 last:border-none"
               >
-                <WeatherInfo weatherData={city} />
+                <WeatherInfo weatherData={city} deleteBtn={true} />
               </li>
             ))}
           </ul>
