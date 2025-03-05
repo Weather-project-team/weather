@@ -37,8 +37,6 @@ export default function Search() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  console.log(filterCity);
-
   return (
     <div>
       <input

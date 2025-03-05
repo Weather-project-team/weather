@@ -11,41 +11,55 @@ export default function Weather() {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [nearestCity, setNearestCity] = useState(""); // 가장 가까운 도시
   const [weatherData, setWeatherData] = useState(null); // 날씨 정보
-
   const [favoriteCities, setFavoriteCities] = useRecoilState(FavoriteCitis);
-  const userId = JSON.parse(localStorage.getItem("user"))?.id || null;
-
-  console.log(userId);
 
   // 📌 현재 위치 가져오기 (useEffect 실행 시 한 번만 호출)
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation({ latitude, longitude });
-        },
-        (error) => console.error("위치 정보를 가져올 수 없습니다:", error)
-      );
-    }
-  }, []);
-
   useEffect(() => {
     const fetchFavoriteCities = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/list/${userId}`
+          "http://localhost:8080/api/bookmarks",
+          {
+            withCredentials: true,
+          }
         );
-        console.log(response);
-        setFavoriteCities(response.data);
+
+        const favoriteCityNames = response.data; // ["서울특별시", "부산광역시", ...]
+
+        // ✅ 각 도시의 날씨 정보를 병렬 요청
+        const weatherRequests = favoriteCityNames.map((city) =>
+          axios.get("http://localhost:8080/api/weather", { params: { city } })
+        );
+
+        // ✅ 모든 날씨 요청을 병렬로 실행하고 결과를 기다림
+        const weatherResponses = await Promise.all(weatherRequests);
+
+        // ✅ 날씨 정보만 배열로 저장
+        setFavoriteCities(weatherResponses.map((res) => res.data));
       } catch (error) {
         console.error("데이터 가져오기 실패:", error);
       }
     };
-    fetchFavoriteCities();
-  }, [favoriteCities]);
 
-  // 📌 위치가 변경되면 가장 가까운 도시 & 날씨 정보 요청
+    fetchFavoriteCities();
+  }, []);
+
+  useEffect(() => {
+    // 📌 현재 위치 가져오기 (최초 1회 실행)
+    if (!location.latitude || !location.longitude) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => console.error("위치 정보 가져오기 실패:", error),
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
+    }
+  }, []);
+
   useEffect(() => {
     if (location.latitude && location.longitude) {
       const fetchNearestCityAndWeather = async () => {
@@ -60,9 +74,13 @@ export default function Weather() {
               },
             }
           );
-          console.log(cityResponse.data);
 
           const cityName = cityResponse.data.city;
+          if (!cityName) {
+            console.error("가장 가까운 도시를 찾을 수 없습니다.");
+            return;
+          }
+
           setNearestCity(cityName);
 
           // 📌 2. 날씨 정보 요청
@@ -72,7 +90,6 @@ export default function Weather() {
               params: { city: cityName },
             }
           );
-          console.log(weatherResponse);
 
           setWeatherData(weatherResponse.data);
         } catch (error) {
@@ -117,7 +134,7 @@ export default function Weather() {
                 key={index}
                 className="p-2 border-b border-gray-400 last:border-none"
               >
-                {city}
+                <WeatherInfo weatherData={city} />
               </li>
             ))}
           </ul>

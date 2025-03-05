@@ -8,7 +8,6 @@ export function FavoriteButton({ city }) {
       .post(
         "http://localhost:8080/api/bookmarks",
         {
-          userId: 1,
           location: city,
         },
         {
