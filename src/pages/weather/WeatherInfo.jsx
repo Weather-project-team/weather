@@ -64,7 +64,7 @@ export default function WeatherInfo({ weatherData, deleteBtn }) {
     }
   };
   return (
-    <div className="flex items-start justify-end h-[40vh] mt-15 bg-cover bg-center"
+    <div className="flex flex-col items-end justify-start h-[40vh] mt-15 bg-cover bg-center relative"
     style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="bg-blue-500/20 backdrop-blur-sm p-4 rounded-2xl text-white shadow-lg">
         <h2 className="text-lg font-bold">{weatherData.city}</h2>
@@ -72,7 +72,7 @@ export default function WeatherInfo({ weatherData, deleteBtn }) {
         <p>온도 : {weatherData.weather.temperature}</p>
         <p>강수 : {weatherData.weather.precipitationType}</p>
       </div>
-      {deleteBtn ? <button onClick={deleteButton}>삭제</button> : null}
+      {deleteBtn ? <button onClick={deleteButton} className="absolute bottom-[5%] right-[5%] cursor-pointer text-lg">삭제</button> : null}
     </div>
   );
 }
