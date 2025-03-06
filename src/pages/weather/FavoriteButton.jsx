@@ -17,6 +17,14 @@ export function FavoriteButton({ city, favoriteCities, setFavoriteCities }) {
         // ✅ UI에서 즉시 반영 (favoriteCities 상태 업데이트)
         setFavoriteCities((prev) => prev.filter((fav) => fav.city !== city));
       } else {
+        // ✅ 날씨 정보 가져오기
+        const weatherResponse = await axios.get(
+          "http://localhost:8080/api/weather",
+          {
+            params: { city },
+          }
+        );
+
         // ✅ 즐겨찾기 추가 (POST)
         await axios.post(
           "http://localhost:8080/api/bookmarks",
@@ -25,12 +33,17 @@ export function FavoriteButton({ city, favoriteCities, setFavoriteCities }) {
         );
 
         // ✅ UI에서 즉시 반영 (favoriteCities 상태 업데이트)
-        setFavoriteCities((prev) => [...prev, { city }]);
+        setFavoriteCities((prev) => [
+          ...prev,
+          { city, weather: weatherResponse.data }, // ✅ 날씨 정보 포함하여 저장
+        ]);
       }
     } catch (error) {
       console.error("즐겨찾기 변경 실패:", error);
     }
   };
+
+  console.log(favoriteCities); // ✅ 디버깅용 로그
 
   return (
     <p
