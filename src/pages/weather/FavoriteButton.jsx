@@ -35,15 +35,14 @@ export function FavoriteButton({ city, favoriteCities, setFavoriteCities }) {
         // ✅ UI에서 즉시 반영 (favoriteCities 상태 업데이트)
         setFavoriteCities((prev) => [
           ...prev,
-          { city, weather: weatherResponse.data }, // ✅ 날씨 정보 포함하여 저장
+          weatherResponse.data, // ✅ 날씨 정보 포함하여 저장
         ]);
       }
     } catch (error) {
       console.error("즐겨찾기 변경 실패:", error);
     }
   };
-
-  console.log(favoriteCities); // ✅ 디버깅용 로그
+  console.log(favoriteCities);
 
   return (
     <p
