@@ -90,6 +90,7 @@ export default function Weather() {
               params: { city: cityName },
             }
           );
+          console.log(weatherResponse.data);
 
           setWeatherData(weatherResponse.data);
         } catch (error) {
