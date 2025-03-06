@@ -129,14 +129,20 @@ export default function Weather() {
 
         {favorites && (
           <ul className="mt-3 bg-gray-200 p-3 rounded-lg shadow-md animate-fade-in">
-            {favoriteCities.map((city, index) => (
-              <li
-                key={index}
-                className="p-2 border-b border-gray-400 last:border-none"
-              >
-                <WeatherInfo weatherData={city} deleteBtn={true} />
-              </li>
-            ))}
+            {favoriteCities.length > 0 ? (
+              favoriteCities.map((city, index) => (
+                <li
+                  key={index}
+                  className="p-2 border-b border-gray-400 last:border-none"
+                >
+                  <WeatherInfo weatherData={city} deleteBtn={true} />
+                </li>
+              ))
+            ) : (
+              <p className="text-center text-gray-600">
+                즐겨찾기한 도시가 없습니다.
+              </p>
+            )}
           </ul>
         )}
       </div>
