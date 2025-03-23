@@ -57,11 +57,11 @@ export default function Search() {
         <ul className="bg-gray-300 mt-2 rounded-lg">
           {filterCity.slice(0, 4).map((city) => (
             <li key={city} className="p-5 flex relative">
-              <img
-                src={city ? null : null}
-                alt="날씨"
-                className="w-[50px] h-[50px] bg-amber-300 rounded-full"
-              />
+{/*               <img */}
+{/*                 src={city ? null : null} */}
+{/*                 alt="날씨" */}
+{/*                 className="w-[50px] h-[50px] bg-amber-300 rounded-full" */}
+{/*               /> */}
               <h1>{city}</h1>
               {/* ✅ 즐겨찾기 상태를 FavoriteButton에 전달 */}
               <FavoriteButton
