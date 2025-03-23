@@ -2,10 +2,11 @@ import logo from "../../assets/logo.png";
 
 export default function Login() {
   const KakaoLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
+    window.location.href = `http://116.34.191.73:8090/oauth2/authorization/kakao`;
   };
   const GoogleLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    window.location.href =
+      "http://116.34.191.73:8090/oauth2/authorization/google";
   };
 
   return (
