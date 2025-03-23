@@ -8,7 +8,10 @@ export default function OAuthRedirect() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/user/me", { withCredentials: true });
+        const response = await axios.get(
+          "http://116.34.191.73:8090/api/user/me",
+          { withCredentials: true }
+        );
         const user = response.data;
 
         if (user) {
